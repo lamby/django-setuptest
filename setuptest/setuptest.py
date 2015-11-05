@@ -147,7 +147,11 @@ class SetupTestSuite(unittest.TestSuite):
 
         import django
         from django.conf import settings
-        from django.utils.importlib import import_module
+        try:
+            from importlib import import_module
+        except ImportError:
+            # Django < 1.9
+            from django.utils.importlib import import_module
         try:
             test_settings = import_module('test_settings')
         except ImportError as e:
